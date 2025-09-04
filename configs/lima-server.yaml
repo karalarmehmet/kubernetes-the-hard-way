@@ -1,0 +1,25 @@
+images:
+  - location: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-arm64.qcow2"
+    arch: "aarch64"
+
+cpus: 1
+memory: "2GiB"
+disk: "20GiB"
+
+ssh:
+  loadDotSSHPubKeys: true
+
+networks:
+  - lima: shared
+
+provision:
+ - mode: system
+   script: |
+      #cloud-config
+      package_update: true
+      packages: [curl, git, net-tools]
+      users:
+      - name: debian
+          sudo: ALL=(ALL) NOPASSWD:ALL
+          groups: sudo
+          shell: /bin/bash
